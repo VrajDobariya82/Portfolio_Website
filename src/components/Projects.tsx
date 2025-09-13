@@ -22,7 +22,7 @@ const projects = [
   {
     title: "3D Product Configurator",
     description: "Interactive 3D product visualization tool allowing users to customize and preview products in real-time.",
-    image: "https://images.unsplash.com/photo-1633899306328-c5e70574aff5",
+    image: "/images/3d.jpeg",
     tech: ["Three.js", "React", "WebGL", "Blender"],
     link: "#"
   }

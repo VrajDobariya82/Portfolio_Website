@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-2xl font-bold mb-4">John Doe</h3>
+            <h3 className="text-2xl font-bold mb-4">Vraj Dobariya</h3>
             <p className="text-gray-300 mb-4">
               A passionate web developer focused on creating beautiful and functional websites.
             </p>
@@ -73,13 +73,13 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Contact Info</h3>
             <ul className="space-y-2">
               <li className="text-gray-300">
-                <span className="font-semibold">Email:</span> john.doe@example.com
+                <span className="font-semibold">Email:</span> "dobariyavraj82@gmail.com"
               </li>
               <li className="text-gray-300">
                 <span className="font-semibold">Phone:</span> +1 (123) 456-7890
               </li>
               <li className="text-gray-300">
-                <span className="font-semibold">Location:</span> New York, USA
+                <span className="font-semibold">Location:</span> Gujarat, India
               </li>
             </ul>
           </div>
@@ -87,7 +87,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-300">
-            &copy; {currentYear} John Doe. All Rights Reserved.
+            &copy; {currentYear} Portfolio. All Rights Reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 flex items-center justify-center">
             Made with <FaHeart className="text-red-500 mx-1" /> using Next.js and Tailwind CSS

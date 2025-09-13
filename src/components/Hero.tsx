@@ -24,7 +24,7 @@ const Hero = () => {
                 className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-6"
               />
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
-                Hi, I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">John Doe</span>
+                Hi, I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">Vraj Dobariya</span>
               </h1>
               <h2 className="text-2xl md:text-3xl text-gray-300 mb-6">
                 Full Stack Developer & UI/UX Designer
@@ -70,7 +70,7 @@ const Hero = () => {
               <div className="absolute inset-2 bg-gray-900 rounded-full"></div>
               <div className="absolute inset-4 rounded-full overflow-hidden border-4 border-purple-500/50 backdrop-blur-sm">
                 <Image 
-                  src="/images/profile.jpg"
+                  src="/images/vraj3.jpg"
                   alt="Profile"
                   width={288}
                   height={288}

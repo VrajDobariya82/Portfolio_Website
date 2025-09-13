@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'John Doe | Portfolio',
-  description: 'Professional portfolio of John Doe, Web Developer & Designer',
+  title: 'Vraj Dobariya | Portfolio',
+  description: 'Professional portfolio of Vraj Dobariya, Web Developer & Designer',
 };
 
 export default function RootLayout({

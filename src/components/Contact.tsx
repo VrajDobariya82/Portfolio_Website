@@ -1,47 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // Here you can add your form submission logic (e.g., sending to an API)
+    
+    // Redirect to thank you page with form data
+    const searchParams = new URLSearchParams(formData);
+    router.push(`/thank-you?${searchParams.toString()}`);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError('');
-
-    try {
-      // In a real application, you would send the form data to your backend
-      // For demo purposes, we'll simulate a successful submission after a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitError('Something went wrong. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const containerVariants = {
@@ -64,182 +56,87 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20">
-      <div className="container">
-        <motion.h2 
-          className="section-title"
+    <section id="contact" className="py-20 bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          Contact Me
-        </motion.h2>
-        
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            Get In Touch
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mx-auto"></div>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto">
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6"
+            onSubmit={handleSubmit}
           >
-            <motion.h3 
-              className="text-2xl font-bold mb-6"
-              variants={itemVariants}
+            <div>
+              <label htmlFor="name" className="block text-gray-300 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Your Name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-gray-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="your@email.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-gray-300 mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                value={formData.message}
+                onChange={handleChange}
+                rows={6}
+                className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                placeholder="Your message..."
+              ></textarea>
+            </div>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex justify-center"
             >
-              Get In Touch
-            </motion.h3>
-            
-            <motion.div 
-              className="space-y-6"
-              variants={containerVariants}
-            >
-              <motion.div 
-                className="flex items-start"
-                variants={itemVariants}
-              >
-                <div className="bg-primary/10 p-3 rounded-full mr-4">
-                  <FaEnvelope className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Email</h4>
-                  <a href="mailto:john.doe@example.com" className="text-gray-600 hover:text-primary transition-colors">
-                    john.doe@example.com
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start"
-                variants={itemVariants}
-              >
-                <div className="bg-primary/10 p-3 rounded-full mr-4">
-                  <FaPhone className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Phone</h4>
-                  <a href="tel:+11234567890" className="text-gray-600 hover:text-primary transition-colors">
-                    +1 (123) 456-7890
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start"
-                variants={itemVariants}
-              >
-                <div className="bg-primary/10 p-3 rounded-full mr-4">
-                  <FaMapMarkerAlt className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Location</h4>
-                  <p className="text-gray-600">New York, USA</p>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              className="mt-8"
-              variants={itemVariants}
-            >
-              <h4 className="font-semibold mb-4">Connect With Me</h4>
-              <div className="flex space-x-4">
-                <a 
-                  href="https://github.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-primary hover:text-white transition-all"
-                >
-                  <FaGithub size={20} />
-                </a>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-primary hover:text-white transition-all"
-                >
-                  <FaLinkedin size={20} />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-gray-100 p-3 rounded-full text-gray-700 hover:bg-primary hover:text-white transition-all"
-                >
-                  <FaTwitter size={20} />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-          
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-          >
-            <motion.form 
-              onSubmit={handleSubmit}
-              className="bg-white p-8 rounded-lg shadow-md"
-              variants={itemVariants}
-            >
-              {submitSuccess ? (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                  Thank you for your message! I'll get back to you soon.
-                </div>
-              ) : null}
-              
-              {submitError ? (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                  {submitError}
-                </div>
-              ) : null}
-              
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div className="mb-6">
-                <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  required
-                ></textarea>
-              </div>
-              
               <button
                 type="submit"
-                className="w-full btn"
-                disabled={isSubmitting}
+                className="px-8 py-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                Send Message
               </button>
-            </motion.form>
-          </motion.div>
+            </motion.div>
+          </motion.form>
         </div>
       </div>
     </section>

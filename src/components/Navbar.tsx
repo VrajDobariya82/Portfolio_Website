@@ -33,7 +33,7 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`}>
       <div className="container flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-primary">
-          John Doe
+          Portfolio
         </Link>
 
         {/* Desktop Menu */}
